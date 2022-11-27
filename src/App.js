@@ -7,7 +7,7 @@ import Droppable from './components/Droppable';
 import Item from './components/Item';
 
 function App() {
-  const items = ['🍎', '🍌', '🍊'];
+  const items = ['🍎', '🍌', '🍊', '🍇', '🍓', '🍒', '🍑', '🍍', '🥥', '🥝', '🍅', '🍆', '🥑', '🥦', '🥬', '🥒', '🌶', '🌽', '🥕', '🥔', '🍠', '🥐', '🥯', '🍞', '🥖', '🥨', '🥞', '🧀', '🍖', '🍗', '🥩', '🥓', '🍔', '🍟', '🍕', '🌭', '🥪', '🌮', '🌯', '🥙', '🥚', '🍳', '🥘', '🍲', '🥣', '🥗', '🍿', '🧂', '🥫', '🍱', '🍘', '🍙', '🍚', '🍛', '🍜', '🍝', '🍠', '🍢', '🍣', '🍤', '🍥', '🥮', '🍡', '🥟', '🥠', '🥡', '🦪', '🍦', '🍧', '🍨', '🍩', '🍪', '🎂', '🍰', '🧁', '🥧', '🍫', '🍬', '🍭', '🍮', '🍯', '🍼', '☕️', '🍵', '🍶', '🍾', '🍷', '🍸', '🍹', '🍺', '🍻', '🥃', '🥤', '🧃', '🧉', '🧊'];
 
   const [activeId, setActiveId] = useState(null);
   const [droppedItems, setDroppedItems] = useState([]);
@@ -24,7 +24,7 @@ function App() {
           ))}
         </div>
 
-        <Droppable>
+        <Droppable className="drop zone">
           {droppedItems.map((item, index) => (
             <Item key={index}>{item}</Item>
           ))}
@@ -32,7 +32,7 @@ function App() {
 
         <DragOverlay dropAnimation={null}>
           {activeId !== null ? (
-            <Item>{items[activeId]}</Item>
+              <Item className="active">{items[activeId]}</Item>
           ) : null}
         </DragOverlay>
 
@@ -41,7 +41,7 @@ function App() {
   );
 
   function handleDragStart(event) {
-    setActiveId(event.active.id);
+    setActiveId(event.active.data.current.id);
   }
 
   function handleDragEnd(event) {
@@ -49,7 +49,7 @@ function App() {
 
     if (over && over.id === 'droppable') {
       // Append to the list of dropped items
-      const newItem = items[active.id];
+      const newItem = items[active.data.current.id];
       setDroppedItems([...droppedItems, newItem]);
     }
   }
